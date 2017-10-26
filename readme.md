@@ -14,4 +14,5 @@ source venv/bin/activate
 **2. Instalar las dependencias:**
 ```
 pip3 install "django<1.12" "selenium<4"
+pip install lettuce
 ```
