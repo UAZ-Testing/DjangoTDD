@@ -1,23 +1,29 @@
 # -*- coding: utf-8 -*-
+
 from lettuce import step
 from lettuce import world
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 import time
 
+import sys
+
+reload(sys)
+sys.setdefaultencoding("utf-8")
+
 
 @step(u'Given I start the to-do app')
 def given_i_start_the_to_do_app(step):
     world.browser = webdriver.Firefox()
     world.browser.get('http://localhost:8000')
+    world.browser.implicitly_wait(1)
 
 
 @step(u'And I see "([^"]*)" as the page title')
 def and_i_see_group1_as_the_page_title(step, page_title):
-    assert page_title in world.browser.title, 'No se encuentra "%s" en el ' \
-                                              'título de la página "%s"' % (
-                                                  page_title,
-                                                  world.browser.title)
+    assert page_title in world.browser.title, \
+        'No se encuentra "%s" en el título de la página "%s"' \
+        % (page_title, world.browser.title)
 
 
 @step(u'And I see "([^"]*)" as the page header')
