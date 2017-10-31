@@ -3,6 +3,7 @@
 from lettuce import step
 from lettuce import world
 from selenium import webdriver
+from selenium.common.exceptions import WebDriverException
 from selenium.webdriver.common.keys import Keys
 import time
 
@@ -67,3 +68,27 @@ def then_i_can_see_group1_in_the_list_of_to_do_items(step, to_do_item):
 @step(u'And I finish the to-do app')
 def and_i_finish_the_to_do_app(step):
     world.browser.quit()
+
+
+'''
+def holamundo():
+    print('holamundo')
+    assert False, 'Falló la llamada a holamundo()'
+
+
+def wait_for_work_to_be_done(function_to_execute):
+    start_time = time.time()
+
+    while True:
+        try:
+            function_to_execute()
+            print('succesful, bye bye')
+            return
+        except (AssertionError, WebDriverException) as e:
+            print('exception, try one more time')
+            if time.time() - start_time > 10:
+                raise e
+            time.sleep(0.5)
+
+wait_for_work_to_be_done(holamundo)
+'''
