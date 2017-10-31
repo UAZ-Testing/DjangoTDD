@@ -60,7 +60,7 @@ def then_i_can_see_group1_in_the_list_of_to_do_items(step, to_do_item):
     table = world.browser.find_element_by_id('id_list_table')
     rows = table.find_elements_by_tag_name('tr')
 
-    assert any(row.text == to_do_item for row in rows), \
+    assert any(to_do_item in row.text for row in rows), \
         'No se encuentra "%s" en la lista de To-Do' % (to_do_item)
 
 
