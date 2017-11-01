@@ -13,10 +13,10 @@ reload(sys)
 sys.setdefaultencoding("utf-8")
 
 
-@step(u'Given I start the to-do app')
-def given_i_start_the_to_do_app(step):
+@step(u'Given I start the to-do app as "([^"]*)"')
+def given_i_start_the_to_do_app_as_group1(step, usuario):
     world.browser = webdriver.Firefox()
-    world.browser.get('http://localhost:8000')
+    world.browser.get('http://localhost:8000/lists/%s' % (usuario))
     world.browser.implicitly_wait(1)
 
 
