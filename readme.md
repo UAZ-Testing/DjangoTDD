@@ -16,3 +16,22 @@ source venv/bin/activate
 pip3 install "django<1.12" "selenium<4"
 pip install lettuce
 ```
+
+## Correr proyecto:
+```
+python manage.py runserver 0.0.0.0:8000
+``` 
+
+## Ejecutar pruebas unitarias:
+```
+python manage.py test
+```
+
+## Ejecutar pruebas funcionales:
+```
+# Ejecución normal:
+lettuce bdd/tests/
+
+# Con stagin server_
+STAGING_SERVER=superlists-staging.ottg.eu lettuce bdd/tests/
+```

@@ -6,6 +6,7 @@ from selenium import webdriver
 from selenium.common.exceptions import WebDriverException
 from selenium.webdriver.common.keys import Keys
 import time
+import os
 
 import sys
 
@@ -21,7 +22,13 @@ def given_i_start_the_to_do_app_as_group1(step, usuario):
         list_id = '1'
     else:
         list_id = '2'
-    world.browser.get('http://localhost:8000/lists/%s/' % (list_id))
+    staging_server = os.environ.get('STAGING_SERVER')
+    if staging_server:
+        world.server_url = 'http://' + staging_server
+    else:
+        world.server_url = 'http://localhost:8000'
+
+    world.browser.get('%s/lists/%s/' % (world.server_url, list_id))
     world.browser.implicitly_wait(1)
 
 
@@ -87,7 +94,7 @@ def and_layout_and_styling_are_correct(step):
 
     assert areAlmostEqual(real_center, expected_center, 10), \
         'El centro esperado es %f y el real es %f' % (
-        expected_center, real_center)
+            expected_center, real_center)
 
 
 def areAlmostEqual(a, b, difference):
