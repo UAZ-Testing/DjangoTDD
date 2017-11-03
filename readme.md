@@ -15,6 +15,8 @@ source venv/bin/activate
 ```
 pip3 install "django<1.12" "selenium<4"
 pip install lettuce
+pip install gunicorn
+pip install whitenoise
 ```
 
 ## Correr proyecto:
