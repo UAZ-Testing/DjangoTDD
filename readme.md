@@ -33,5 +33,28 @@ python manage.py test
 lettuce bdd/tests/
 
 # Con stagin server_
-STAGING_SERVER=superlists-staging.ottg.eu lettuce bdd/tests/
+STAGING_SERVER=djangotdd lettuce bdd/tests/
+```
+
+## Instalar nginx:
+```
+sudo apt-get update
+sudo apt-get install systemd
+sudo apt-get install nginx
+sudo mv /lib/systemd/system/nginx.service /etc/systemd/system/nginx.service
+sudo systemctl start nginx
+```
+
+## Instalar python 3.6:
+```
+sudo add-apt-repository ppa:fkrull/deadsnakes
+sudo apt-get update
+sudo apt-get install python3.6 python3.6-venv
+```
+
+## Configurar dns:
+**Agregar el dominio a los hosts:**
+```
+sudo vim /etc/hosts
+192.168.33.10   djangotdd
 ```
