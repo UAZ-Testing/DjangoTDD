@@ -7,7 +7,8 @@ Feature: Add To Do Item
     Given I start the to-do app as "Edith"
     And I see "To-Do" as the page title
     And I see "To-Do" as the page header
-    And I see "Enter a to-do item" as an invitation to add a to-do item
+    And I see "Enter a to-do item" as an invitation to add a to-do item+
+    And layout and styling are correct
     When I fill "Buy peacock feathers" in the new to-do textbox
     And I press the Enter key
     Then I can see "Buy peacock feathers" in the list of to-do items
@@ -18,6 +19,7 @@ Feature: Add To Do Item
     And I see "To-Do" as the page title
     And I see "To-Do" as the page header
     And I see "Enter a to-do item" as an invitation to add a to-do item
+    And layout and styling are correct
     When I fill "Use peacock feathers to make a fly" in the new to-do textbox
     And I press the Enter key
     Then I can see "Use peacock feathers to make a fly" in the list of to-do items
@@ -28,6 +30,7 @@ Feature: Add To Do Item
     And I see "To-Do" as the page title
     And I see "To-Do" as the page header
     And I see "Enter a to-do item" as an invitation to add a to-do item
+    And layout and styling are correct
     When I fill "Buy Milk" in the new to-do textbox
     And I press the Enter key
     Then I can see "Buy Milk" in the list of to-do items

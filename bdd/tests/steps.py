@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-
+import math
 from lettuce import step
 from lettuce import world
 from selenium import webdriver
@@ -73,6 +73,25 @@ def then_i_can_see_group1_in_the_list_of_to_do_items(step, to_do_item):
 @step(u'And I finish the to-do app')
 def and_i_finish_the_to_do_app(step):
     world.browser.quit()
+
+
+@step(u'And layout and styling are correct')
+def and_layout_and_styling_are_correct(step):
+    world.browser.set_window_size(1024, 768)
+
+    # She notices the input box is nicely centered
+    inputbox = world.browser.find_element_by_id('id_new_item')
+
+    real_center = inputbox.location['x'] + inputbox.size['width'] / 2
+    expected_center = 512
+
+    assert areAlmostEqual(real_center, expected_center, 10), \
+        'El centro esperado es %f y el real es %f' % (
+        expected_center, real_center)
+
+
+def areAlmostEqual(a, b, difference):
+    return abs(a - b) <= difference
 
 
 '''
