@@ -17,7 +17,11 @@ sys.setdefaultencoding("utf-8")
 def given_i_start_the_to_do_app_as_group1(step, usuario):
     world.browser = webdriver.Firefox()
     # world.browser.get('http://localhost:8000/lists/%s' % (usuario))
-    world.browser.get('http://localhost:8000/lists/the-only-list-in-the-world/')
+    if usuario == 'Edith':
+        list_id = '1'
+    else:
+        list_id = '2'
+    world.browser.get('http://localhost:8000/lists/%s/' % (list_id))
     world.browser.implicitly_wait(1)
 
 
