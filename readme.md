@@ -60,3 +60,14 @@ sudo apt-get install python3.6 python3.6-venv
 sudo vim /etc/hosts
 192.168.33.10   djangotdd
 ```
+
+## Echar andar aplicación en el server:
+```
+# Deploy manual
+gunicorn superlists.wsgi:application
+
+# Deploy automático
+fab deploy:host=elspeth@superlists.ottg.eu
+```
+
+![screenshot](screenshot_list.png)
