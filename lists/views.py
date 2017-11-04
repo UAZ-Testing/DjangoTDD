@@ -1,5 +1,6 @@
 import json
 
+from django.core.exceptions import ValidationError
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from io import StringIO
@@ -11,31 +12,38 @@ from lists.models import Item, List
 
 def view_list(request, list_id):
     list_ = List.objects.get(id=list_id)
-    errors = request.GET.get('errors', None)
-
-    if errors is not None:
-        errors = json.loads(errors)
+    error = request.GET.get('error', None)
 
     return render(request, 'list.html', {
         'list': list_,
-        'errors': errors
+        'error': error
     })
 
 
 def new_list(request):
     list_ = List.objects.create()
-    Item.objects.create(text=request.POST['item_text'], list=list_)
-    return redirect('/lists/%d/' % (list_.id))
+    item = Item(text=request.POST['item_text'], list=list_)
+    error = ''
+
+    try:
+        item.full_clean()
+        item.save()
+    except ValidationError:
+        error = 'The item cannot be empty'
+        return render(request, 'home.html', {"error": error})
+
+    return redirect('/lists/%d/?error=%s' % (list_.id, error))
 
 
 def add_item(request, list_id):
     list_ = List.objects.get(id=list_id)
     item_text = request.POST.get('item_text', None)
 
+    error = ''
+
     if item_text is None or len(item_text) == 0:
-        errors = ['The item cannot be empty']
+        error = 'The item cannot be empty'
     else:
-        errors = []
         Item.objects.create(text=request.POST['item_text'], list=list_)
 
-    return redirect('/lists/%d/?errors=%s' % (list_.id, json.dumps(errors)))
+    return redirect('/lists/%d/?error=%s' % (list_.id, error))
