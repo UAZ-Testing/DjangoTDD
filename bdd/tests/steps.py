@@ -111,7 +111,7 @@ def then_i_can_see_the_error_group1(step, group1):
 def findEmptyItemError():
     error_msg = world.browser.find_element_by_css_selector('.has-error').text
 
-    assert error_msg == "You can't have an empty list item", \
+    assert "The item cannot be empty" in error_msg, \
         "No se muestra el mensaje de error esperado"
 
 
@@ -119,7 +119,7 @@ def areAlmostEqual(a, b, difference):
     return abs(a - b) <= difference
 
 
-def wait_for(self, fn):
+def wait_for(fn):
     start_time = time.time()
     while True:
         try:

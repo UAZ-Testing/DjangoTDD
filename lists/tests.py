@@ -110,7 +110,8 @@ class NewListTest(TestCase):
         response = self.client.post('/lists/new',
                                     data={'item_text': 'A new list item'})
         new_list = List.objects.first()
-        self.assertRedirects(response, '/lists/%d/' % (new_list.id))
+
+        self.assertIn('/lists/%d/' % (new_list.id), response.url)
 
 
 class NewItemTest(TestCase):
@@ -137,4 +138,4 @@ class NewItemTest(TestCase):
             data={'item_text': 'A new item for an existing list'}
         )
 
-        self.assertRedirects(response, '/lists/%d/' % (correct_list.id))
+        self.assertIn('/lists/%d/' % (correct_list.id), response.url)
