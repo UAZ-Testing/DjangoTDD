@@ -14,6 +14,9 @@ reload(sys)
 sys.setdefaultencoding("utf-8")
 
 
+################################## Steps #######################################
+
+
 @step(u'Given I start the to-do app as "([^"]*)"')
 def given_i_start_the_to_do_app_as_group1(step, usuario):
     world.browser = webdriver.Firefox()
@@ -97,29 +100,31 @@ def and_layout_and_styling_are_correct(step):
             expected_center, real_center)
 
 
+@step(u'Then I can see the error "([^"]*)"')
+def then_i_can_see_the_error_group1(step, group1):
+    wait_for(lambda: findEmptyItemError())
+
+
+################################# Helpers ######################################
+
+
+def findEmptyItemError():
+    error_msg = world.browser.find_element_by_css_selector('.has-error').text
+
+    assert error_msg == "You can't have an empty list item", \
+        "No se muestra el mensaje de error esperado"
+
+
 def areAlmostEqual(a, b, difference):
     return abs(a - b) <= difference
 
 
-'''
-def holamundo():
-    print('holamundo')
-    assert False, 'Falló la llamada a holamundo()'
-
-
-def wait_for_work_to_be_done(function_to_execute):
+def wait_for(self, fn):
     start_time = time.time()
-
     while True:
         try:
-            function_to_execute()
-            print('succesful, bye bye')
-            return
+            return fn()
         except (AssertionError, WebDriverException) as e:
-            print('exception, try one more time')
             if time.time() - start_time > 10:
                 raise e
             time.sleep(0.5)
-
-wait_for_work_to_be_done(holamundo)
-'''
