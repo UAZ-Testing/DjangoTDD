@@ -90,8 +90,6 @@ def and_i_finish_the_to_do_app(step):
 def and_layout_and_styling_are_correct(step):
     world.browser.set_window_size(1024, 768)
 
-    # inputbox = world.browser.find_element_by_id('id_new_item')
-
     inputbox = get_item_input_box()
 
     real_center = inputbox.location['x'] + inputbox.size['width'] / 2
@@ -115,10 +113,12 @@ def get_item_input_box():
 
 
 def findEmptyItemError():
-    error_msg = world.browser.find_element_by_css_selector('.has-error').text
-
-    assert "The item cannot be empty" in error_msg, \
-        "No se muestra el mensaje de error esperado"
+    try:
+        error_msg = world.browser.find_element_by_css_selector(
+            '#id_text:invalid')
+        assert True
+    except:
+        assert False, 'No se desplegó el error en el form'
 
 
 def areAlmostEqual(a, b, difference):

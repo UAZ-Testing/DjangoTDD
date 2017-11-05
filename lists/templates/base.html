@@ -37,10 +37,10 @@
         </div>
     </div>
 
-    {% if error %}
+    {% if form.errors %}
         <div class="row">
             <div class="col-md-6 col-md-offset-3 alert alert-danger has-error">
-                <p>{{ error }}</p>
+                <p>{{ form.text.errors }}</p>
             </div>
         </div>
     {% endif %}
