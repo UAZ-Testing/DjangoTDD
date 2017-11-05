@@ -23,7 +23,8 @@ def view_list(request, list_id):
         except ValidationError:
             error = 'The item cannot be empty'
 
-        return redirect('/lists/%d/?error=%s' % (list_.id, error))
+        # return redirect('/lists/%d/?error=%s' % (list_.id, error))
+        return redirect('%s?error=%s' % (list_.get_absolute_url(), error))
 
     return render(request, 'list.html', {
         'list': list_,
@@ -43,4 +44,4 @@ def new_list(request):
         error = 'The item cannot be empty'
         return render(request, 'home.html', {"error": error})
 
-    return redirect('/lists/%d/?error=%s' % (list_.id, error))
+    return redirect('%s?error=%s' % (list_.get_absolute_url(), error))
