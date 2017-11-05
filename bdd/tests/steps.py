@@ -52,7 +52,8 @@ def and_i_see_group1_as_the_page_header(step, page_header):
 
 @step(u'And I see "([^"]*)" as an invitation to add a to-do item')
 def and_i_see_group1_as_an_invitation_to_add_a_to_do_item(step, expected):
-    world.inputbox = world.browser.find_element_by_id('id_new_item')
+    # world.inputbox = world.browser.find_element_by_id('id_new_item')
+    world.inputbox = get_item_input_box()
 
     obtained = world.inputbox.get_attribute('placeholder')
 
@@ -89,8 +90,9 @@ def and_i_finish_the_to_do_app(step):
 def and_layout_and_styling_are_correct(step):
     world.browser.set_window_size(1024, 768)
 
-    # She notices the input box is nicely centered
-    inputbox = world.browser.find_element_by_id('id_new_item')
+    # inputbox = world.browser.find_element_by_id('id_new_item')
+
+    inputbox = get_item_input_box()
 
     real_center = inputbox.location['x'] + inputbox.size['width'] / 2
     expected_center = 512
@@ -106,6 +108,10 @@ def then_i_can_see_the_error_group1(step, group1):
 
 
 ################################# Helpers ######################################
+
+
+def get_item_input_box():
+    return world.browser.find_element_by_id('id_text')
 
 
 def findEmptyItemError():
