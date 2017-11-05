@@ -19,6 +19,7 @@ from lists import views
 from lists import urls as list_urls
 
 urlpatterns = [
+    url(r'^$', views.home_page, name='home_page'),
     url(r'^admin/', admin.site.urls),
     url(r'^lists/', include(list_urls)),
 ]
