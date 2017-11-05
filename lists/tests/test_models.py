@@ -1,5 +1,7 @@
 from django.core.exceptions import ValidationError
 from django.test import TestCase
+
+from lists.forms import ItemForm
 from lists.models import Item, List
 
 
