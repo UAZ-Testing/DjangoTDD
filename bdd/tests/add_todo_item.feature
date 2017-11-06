@@ -46,3 +46,16 @@ Feature: Add To Do Item
     And I press the Enter key
     Then I can see "Buy Milk" in the list of to-do items
     And I finish the to-do app
+
+  Scenario: Add "Elemento cualquiera" two times to Francis to-do list
+    Given I start the to-do app as "Francis"
+    And I see "To-Do" as the page title
+    And I see "To-Do" as the page header
+    And I see "Enter a to-do item" as an invitation to add a to-do item
+    And layout and styling are correct
+    When I fill "Buy Milk" in the new to-do textbox
+    And I press the Enter key
+    And I fill the same item one more time in the new to-do textbox
+    And I press the Enter key
+    Then I can see the error You have already got this in your list
+    And I finish the to-do app

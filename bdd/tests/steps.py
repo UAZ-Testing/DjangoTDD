@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 import math
+import random
+
 from lettuce import step
 from lettuce import world
 from selenium import webdriver
@@ -63,7 +65,10 @@ def and_i_see_group1_as_an_invitation_to_add_a_to_do_item(step, expected):
 
 @step(u'When I fill "([^"]*)" in the new to-do textbox')
 def when_i_fill_group1_in_the_new_to_do_textbox(step, to_do_item):
+    if len(to_do_item) > 0:
+        to_do_item = to_do_item + ' ' + str(random.randint(1000, 9999))
     world.inputbox.send_keys(to_do_item)
+    world.last_item_inserted = to_do_item
 
 
 @step(u'And I press the Enter key')
@@ -105,7 +110,29 @@ def then_i_can_see_the_error_group1(step, group1):
     wait_for(lambda: findEmptyItemError())
 
 
+@step(u'And I fill the same item one more time in the new to-do textbox')
+def and_i_fill_the_same_item_one_more_time_in_the_new_to_do_textbox(step):
+    time.sleep(1)
+    world.inputbox = get_item_input_box()
+    world.inputbox.send_keys(world.last_item_inserted)
+
+
+@step(u'Then I can see the error You have already got this in your list')
+def then_i_can_see_the_error_you_ve_already_got_this_in_your_list(step):
+    wait_for(lambda: find_repeated_item_error())
+
+
 ################################# Helpers ######################################
+
+
+def find_repeated_item_error():
+    error_buscado = "You've already got this in your list"
+    try:
+        errors = world.browser.find_element_by_css_selector('.has-error').text
+        assert error_buscado in errors, \
+            'No se encuentra "%s" en "%s"' % (error_buscado, errors)
+    except:
+        assert False, 'No se desplegó ningún error'
 
 
 def get_item_input_box():
