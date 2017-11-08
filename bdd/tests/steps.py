@@ -65,10 +65,7 @@ def and_i_see_group1_as_an_invitation_to_add_a_to_do_item(step, expected):
 
 @step(u'When I fill "([^"]*)" in the new to-do textbox')
 def when_i_fill_group1_in_the_new_to_do_textbox(step, to_do_item):
-    if len(to_do_item) > 0:
-        to_do_item = to_do_item + ' ' + str(random.randint(1000, 9999))
-    world.inputbox.send_keys(to_do_item)
-    world.last_item_inserted = to_do_item
+    i_fill_item_in_the_new_to_do_textbox(to_do_item)
 
 
 @step(u'And I press the Enter key')
@@ -79,11 +76,7 @@ def and_i_press_the_enter_key(step):
 
 @step(u'Then I can see "([^"]*)" in the list of to-do items')
 def then_i_can_see_group1_in_the_list_of_to_do_items(step, to_do_item):
-    table = world.browser.find_element_by_id('id_list_table')
-    rows = table.find_elements_by_tag_name('tr')
-
-    assert any(to_do_item in row.text for row in rows), \
-        'No se encuentra "%s" en la lista de To-Do' % (to_do_item)
+    i_can_see_item_in_the_list_of_to_do_items(to_do_item)
 
 
 @step(u'And I finish the to-do app')
@@ -105,11 +98,6 @@ def and_layout_and_styling_are_correct(step):
             expected_center, real_center)
 
 
-@step(u'Then I can see the error "([^"]*)"')
-def then_i_can_see_the_error_group1(step, group1):
-    wait_for(lambda: findEmptyItemError())
-
-
 @step(u'And I fill the same item one more time in the new to-do textbox')
 def and_i_fill_the_same_item_one_more_time_in_the_new_to_do_textbox(step):
     time.sleep(1)
@@ -122,7 +110,56 @@ def then_i_can_see_the_error_you_ve_already_got_this_in_your_list(step):
     wait_for(lambda: find_repeated_item_error())
 
 
+@step(u'And I fill "([^"]*)" in the new to-do textbox')
+def and_i_fill_group1_in_the_new_to_do_textbox(step, to_do_item):
+    world.inputbox = get_item_input_box()
+    i_fill_item_in_the_new_to_do_textbox(to_do_item)
+
+
+@step(u'Then the error message is closed')
+def then_the_error_message_is_closed(step):
+    assert not error_box_is_shown(), 'Los errores tenían que ocultarse'
+
+
+@step(u'And I can see "([^"]*)" in the list of to-do items')
+def and_i_can_see_group1_in_the_list_of_to_do_items(step, to_do_item):
+    i_can_see_item_in_the_list_of_to_do_items(to_do_item)
+
+
+@step(u'Then I can see the error The item cannot be empty')
+def then_i_can_see_the_error_the_item_cannot_be_empty(step):
+    wait_for(lambda: findEmptyItemError())
+
+
+############################## Steps helpers ###################################
+def i_fill_item_in_the_new_to_do_textbox(to_do_item):
+    if len(to_do_item) > 0:
+        to_do_item = to_do_item + ' ' + str(random.randint(1000, 9999))
+    world.inputbox.send_keys(to_do_item)
+    world.last_item_inserted = to_do_item
+
+
+def i_can_see_item_in_the_list_of_to_do_items(to_do_item):
+    table = world.browser.find_element_by_id('id_list_table')
+    rows = table.find_elements_by_tag_name('tr')
+
+    assert any(to_do_item in row.text for row in rows), \
+        'No se encuentra "%s" en la lista de To-Do' % (to_do_item)
+
+
 ################################# Helpers ######################################
+
+
+def get_item_input_box():
+    return world.browser.find_element_by_id('id_text')
+
+
+def error_box_is_shown():
+    try:
+        error = world.browser.find_element_by_css_selector('.has-error')
+        return error.is_displayed()
+    except:
+        return False
 
 
 def find_repeated_item_error():
@@ -133,10 +170,6 @@ def find_repeated_item_error():
             'No se encuentra "%s" en "%s"' % (error_buscado, errors)
     except:
         assert False, 'No se desplegó ningún error'
-
-
-def get_item_input_box():
-    return world.browser.find_element_by_id('id_text')
 
 
 def findEmptyItemError():

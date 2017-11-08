@@ -23,15 +23,6 @@
                       action="{% block form_action %}{% endblock %}">
                     {{ form.text }}
                     {% csrf_token %}
-                    {#    {% if error %}#}
-                    {#      <div class="form-group has-error">#}
-                    {#            #}
-                    {#                <form method="POST"#}
-                    {#                      action="{% block form_action %}{% endblock %}">#}
-                    {#                    <input name="item_text" id="id_new_item"#}
-                    {#                           class="form-control input-lg"#}
-                    {#                           placeholder="Enter a to-do item"/>#}
-                    {#                    {% csrf_token %}#}
                 </form>
             </div>
         </div>
@@ -54,4 +45,7 @@
 
 </div>
 </body>
+
+<script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
+<script src="{% static 'js/list.js' %}"></script>
 </html>
